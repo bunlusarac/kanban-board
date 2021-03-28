@@ -8,4 +8,13 @@
     <string name="delete_dialog_yes_button_label">Yes</string>
     <string name="delete_dialog_no_button_label">No</string>
     <string name="new_task">New task</string>
+    <string name="delete_btn_cont_desc">Delete button</string>
+    <string name="color_btn_cont_desc">Open/close color palette button</string>
+    <string name="drag_btn_cont_desc">Hold and drag task button</string>
+    <string name="move_btn_cont_desc">Send task to next tasklist button</string>
+    <string name="blue_btn_cont_desc">Blue color button</string>
+    <string name="green_btn_cont_desc">Green color button</string>
+    <string name="yellow_btn_cont_desc">Yellow color button</string>
+    <string name="pink_btn_cont_desc">Pink color button</string>
+    <string name="task_edit_text_hint">Task text input field</string>
 </resources>

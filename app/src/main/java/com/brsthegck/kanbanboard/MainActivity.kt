@@ -46,9 +46,7 @@ class MainActivity : AppCompatActivity(), TasklistFragment.Callbacks {
 
             val currentFragment = (supportFragmentManager.fragments[currentTasklistType] as TasklistFragment)
 
-            addTaskToViewModel(Task()
-                        .apply{taskText = resources.getString(R.string.new_task)},
-                        currentTasklistType)
+            addTaskToViewModel(Task(), currentTasklistType)
 
             currentFragment.taskRecyclerView.scrollToPosition(currentTasklist.size - 1)
             true

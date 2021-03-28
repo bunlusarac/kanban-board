@@ -16,5 +16,5 @@
     <string name="green_btn_cont_desc">Green color button</string>
     <string name="yellow_btn_cont_desc">Yellow color button</string>
     <string name="pink_btn_cont_desc">Pink color button</string>
-    <string name="task_edit_text_hint">Task text input field</string>
+    <string name="task_edit_text_hint">Enter your task here</string>
 </resources>

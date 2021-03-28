@@ -2,7 +2,6 @@ package com.brsthegck.kanbanboard
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,16 +10,14 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doBeforeTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
-
 import java.util.*
 
 private const val ARG_TASKLIST_TYPE = "tasklist_type"
@@ -33,15 +30,15 @@ class TasklistFragment : Fragment(){
     private lateinit var visibleColorPaletteViewList : List<View>
     lateinit var taskRecyclerView: RecyclerView
 
-    private var tasklistType : Int = -1;
-    private var adapter : TaskViewAdapter? = TaskViewAdapter(LinkedList<Task>());
+    private var tasklistType : Int = -1
+    private var adapter : TaskViewAdapter? = TaskViewAdapter(LinkedList<Task>())
     private var colorPaletteIsVisible : Boolean = false
     private var callbacks: Callbacks? = null
 
     //Callback interface to delegate access functions in MainActivity
     interface Callbacks{
-        fun addTaskToViewModel(task: Task, tasklistType: Int, adapterPosition: Int)
-        fun deleteTaskFromViewModel(task: Task, tasklistType: Int, adapterPosition: Int)
+        fun addTaskToViewModel(task: Task, destinationTasklistType: Int)
+        fun deleteTaskFromViewModel(tasklistType: Int, adapterPosition: Int)
         fun getTaskListFromViewModel(tasklistType: Int) : LinkedList<Task>
     }
 
@@ -66,10 +63,10 @@ class TasklistFragment : Fragment(){
                 val adapter = recyclerView.adapter as TaskViewAdapter
                 val from = viewHolder.adapterPosition
                 val to = target.adapterPosition
+
                 adapter.moveTaskView(from, to)
                 adapter.notifyItemMoved(from, to)
 
-                Log.d("ItemTouchHelper", "Viewmodel of this fragment\n${callbacks?.getTaskListFromViewModel(tasklistType)}")
                 return true
             }
 
@@ -89,7 +86,6 @@ class TasklistFragment : Fragment(){
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { /* Not implemented on purpose. */ }
         }
-
         ItemTouchHelper(taskItemTouchCallback)
     }
 
@@ -108,11 +104,11 @@ class TasklistFragment : Fragment(){
         //Inflate the layout of this fragment, get recyclerview ref, set layout manager for recycler view
         val view = inflater.inflate(R.layout.tasklist_fragment_layout, container,false)
         taskRecyclerView = view.findViewById(R.id.task_recycler_view) as RecyclerView
-        taskRecyclerView.layoutManager = LinearLayoutManager(context);
+        taskRecyclerView.layoutManager = LinearLayoutManager(context)
         itemTouchHelper.attachToRecyclerView(taskRecyclerView)
 
         //Fill the recyclerview with data from viewmodel
-        updateInterface();
+        updateInterface()
 
         //Return the created view
         return view
@@ -130,7 +126,7 @@ class TasklistFragment : Fragment(){
         lateinit var task: Task
 
         val taskEditText : EditText = view.findViewById(R.id.task_edit_text)
-        val taskLayout : ConstraintLayout = view.findViewById(R.id.task_layout) //NOT NEEDED
+        val taskLayout : ConstraintLayout = view.findViewById(R.id.task_layout)
 
         val deleteButton : ImageButton = view.findViewById(R.id.btn_delete)
         val colorButton : ImageButton = view.findViewById(R.id.btn_color)
@@ -162,22 +158,25 @@ class TasklistFragment : Fragment(){
 
         //Bind data from task to the task view
         fun bindTaskDataToView(task: Task) {
+            //Assign given task to this viewholder
             this.task = task
 
             //Assign corresponding drawable as background for task card
-            var taskCardDrawableResId = when (task.color) {
+            val taskCardDrawableResId = when (task.color) {
                 TaskColor.YELLOW -> R.drawable.task_card_yellow
                 TaskColor.BLUE -> R.drawable.task_card_blue
                 TaskColor.GREEN -> R.drawable.task_card_green
                 TaskColor.PINK -> R.drawable.task_card_pink
             }
 
+            //Set text to edittext and set card background
             taskEditText.setText(task.taskText)
-            taskLayout.background = resources.getDrawable(taskCardDrawableResId, null)
+            taskLayout.background = ResourcesCompat.getDrawable(resources, taskCardDrawableResId, null)
+
         }
 
-        //Prepare the view's listeners
-        fun prepareView(taskList: LinkedList<Task>) : TaskViewHolder{
+        //Prepare the view's listeners, called when the viewholder is created
+        fun prepareView() : TaskViewHolder{
             //Set button images and listeners of created viewholder's view (MOVE BUTTON)
             when(tasklistType){
                 TASKLIST_TYPE_TODO -> { moveButton.setImageResource(R.drawable.ic_arrow_forward_24px) }
@@ -198,6 +197,7 @@ class TasklistFragment : Fragment(){
                     //If there is an open color palette, close the last open palette
                     setColorPaletteVisibility(View.INVISIBLE, visibleColorPaletteViewList)
 
+                    //If the pressed color button is the last task view with colorpalette opened,
                     if(visibleColorPaletteViewList[0] != colorPaletteBackground){
                         setColorPaletteVisibility(View.VISIBLE)
 
@@ -220,26 +220,17 @@ class TasklistFragment : Fragment(){
                     colorPaletteIsVisible = false
                 }
             }
+
+            //Add listener for delete button
             deleteButton.setOnClickListener {
                 deleteDialog.setPositiveButton(R.string.delete_dialog_yes_button_label)
                 { _, _ ->
-                    //Delete task from the database and notify adapter
-                    //Observer will retrieve the updated task list after deletion
-                    callbacks?.deleteTaskFromViewModel(task, tasklistType, adapterPosition)
-                    //adapter?.notifyItemRemoved(adapterPosition)
+                    //Delete task from the view model and notify adapter
+                    callbacks?.deleteTaskFromViewModel(tasklistType, adapterPosition)
                 }.create().show()
             }
 
-            /*
-            taskEditText.setOnTouchListener { _, event ->
-                if(event.action == MotionEvent.ACTION_DOWN && colorPaletteIsVisible){
-                    setColorPaletteVisibility(View.INVISIBLE, visibleColorPaletteViewList)
-                    colorPaletteIsVisible = false
-                }
-
-                return@setOnTouchListener true
-            }*/
-            
+            //Add listener for when edit text is changed, save the input to task at view model
             taskEditText.addTextChangedListener {
                 task.taskText = it.toString()
             }
@@ -265,29 +256,31 @@ class TasklistFragment : Fragment(){
                     else -> throw Exception()
                 }
 
+                //Change background to corresponing color on click.
                 colorPaletteViews[i].setOnClickListener {
-                    taskLayout.background = resources.getDrawable(colorResId, null)
+                    taskLayout.background = ResourcesCompat.getDrawable(resources, colorResId, null)
 
                     if (colorPaletteIsVisible) {
                         setColorPaletteVisibility(View.INVISIBLE, visibleColorPaletteViewList)
                         colorPaletteIsVisible = false
                     }
 
-                    taskList[adapterPosition].color = colorEnum
-                    //callbacks?.updateTaskInDatabase(task.apply{color = colorEnum})
+                    task.color = colorEnum
                 }
             }
 
             //Set drag button listener
-            dragButton.setOnTouchListener { _, event ->
+            dragButton.setOnTouchListener { v, event ->
 
                     if (event.actionMasked == MotionEvent.ACTION_DOWN)
                         itemTouchHelper.startDrag(this)
 
+                    v.performClick()
                     return@setOnTouchListener true
 
             }
 
+            //Set listener for move button. Delete the task from this list and add it to destination list
             moveButton.setOnClickListener {
                 val destinationTaskListType = when(tasklistType){
                     TASKLIST_TYPE_TODO, TASKLIST_TYPE_DONE -> TASKLIST_TYPE_DOING
@@ -295,8 +288,8 @@ class TasklistFragment : Fragment(){
                     else -> throw Exception("Unrecognized tasklist type")
                 }
 
-                callbacks?.addTaskToViewModel(task, destinationTaskListType, adapterPosition)
-                callbacks?.deleteTaskFromViewModel(task, tasklistType, adapterPosition)
+                callbacks?.addTaskToViewModel(task, destinationTaskListType)
+                callbacks?.deleteTaskFromViewModel(tasklistType, adapterPosition)
             }
 
             return this
@@ -310,19 +303,20 @@ class TasklistFragment : Fragment(){
             //Inflate the desired task view
             val view = layoutInflater.inflate(R.layout.task_view, parent, false)
 
-            //Create a viewholder that holds the created view
-            return TaskViewHolder(view).prepareView(taskList)
+            //Create a viewholder that holds the created view, set listeners and prepare the view
+            return TaskViewHolder(view).prepareView()
         }
 
+        //Bind task data to view
         override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-            var task : Task = taskList[position]
+            val task : Task = taskList[position]
             holder.bindTaskDataToView(task)
         }
 
-        override fun getItemCount(): Int = taskList.size;
+        override fun getItemCount(): Int = taskList.size
 
+        //Change a tasks position
         fun moveTaskView(from: Int, to: Int){
-
             val temp = taskList[from]
             taskList.removeAt(from)
             taskList.add(to, temp)

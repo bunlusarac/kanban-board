@@ -2,9 +2,9 @@ package com.brsthegck.kanbanboard
 
 import java.util.UUID
 
-enum class TaskColor(){YELLOW, PINK, BLUE, GREEN}
-
+/**
+ * A data class representing single task on tasklists
+ */
 data class Task(val taskId: UUID = UUID.randomUUID(),
                 var taskText: String = "",
-                var color: TaskColor = TaskColor.YELLOW,
-                var tasklistType: Int = -1)
+                var color: TaskColor = TaskColor.YELLOW)

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KanbanBoard</string>
+    <string name="tab_label_todo">YAPILACAK</string>
+    <string name="tab_label_doing">YAPILIYOR</string>
+    <string name="tab_label_done">YAPILDI</string>
+    <string name="delete_dialog_title">Görev sil</string>
+    <string name="delete_dialog_text">Bu görevi silmek istediğinizden emin misiniz?</string>
+    <string name="delete_dialog_yes_button_label">Evet</string>
+    <string name="delete_dialog_no_button_label">Hayır</string>
+    <string name="new_task">Yeni görev</string>
+    <string name="delete_btn_cont_desc">Silme düğmesi</string>
+    <string name="color_btn_cont_desc">Renk paletini aç/kapat düğmesi</string>
+    <string name="drag_btn_cont_desc">Basılı tutup sürükle ve görevin yerini değiştir düğmesi</string>
+    <string name="move_btn_cont_desc">Görevi sonraki görev listesine gönder düğmesi</string>
+    <string name="blue_btn_cont_desc">Mavi renk düğmesi</string>
+    <string name="green_btn_cont_desc">Yeşil renk düğmesi</string>
+    <string name="yellow_btn_cont_desc">Sarı renk düğmesi</string>
+    <string name="pink_btn_cont_desc">Pembe renk düğmesi</string>
+    <string name="task_edit_text_hint">Görevinizi buraya yazın</string>
+</resources>

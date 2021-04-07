@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KanbanBoard</string>
+    <string name="tab_label_todo">список справ</string>
+    <string name="tab_label_doing">в процесі</string>
+    <string name="tab_label_done">зроблено</string>
+    <string name="delete_dialog_title">Видалити завдання</string>
+    <string name="delete_dialog_text">Ви впевнені, що хочете видалити це завдання?</string>
+    <string name="delete_dialog_yes_button_label">Так</string>
+    <string name="delete_dialog_no_button_label">Немає</string>
+    <string name="new_task">Нове завдання</string>
+    <string name="delete_btn_cont_desc">Кнопка "Видалити"</string>
+    <string name="color_btn_cont_desc">Кнопка "Відкрити / закрити кольорову палітру"</string>
+    <string name="drag_btn_cont_desc">Кнопка "Утримуй і перетягуй завдання"</string>
+    <string name="move_btn_cont_desc">Кнопка "Надіслати завдання до наступного списку завдань"</string>
+    <string name="blue_btn_cont_desc">Кнопка синього забарвлення</string>
+    <string name="green_btn_cont_desc">Зелена кнопка забарвлення</string>
+    <string name="yellow_btn_cont_desc">Кнопка жовтого забарвлення</string>
+    <string name="pink_btn_cont_desc">Кнопка забарвлення рожевий</string>
+    <string name="task_edit_text_hint">Введіть своє завдання тут</string>
+</resources>

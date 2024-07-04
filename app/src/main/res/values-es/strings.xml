@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KanbanBoard</string>
+    <string name="tab_label_todo">POR HACER</string>
+    <string name="tab_label_doing">HACIENDO</string>
+    <string name="tab_label_done">HECHO</string>
+    <string name="delete_dialog_title">Eliminar tarea</string>
+    <string name="delete_dialog_text">¿Estás seguro de eliminar esta tarea?</string>
+    <string name="delete_dialog_yes_button_label">Sí</string>
+    <string name="delete_dialog_no_button_label">No</string>
+    <string name="new_task">Nueva tarea</string>
+    <string name="delete_btn_cont_desc">Botón de eliminar</string>
+    <string name="color_btn_cont_desc">Botón de abrir/cerrar paleta de colores</string>
+    <string name="drag_btn_cont_desc">Botón de mantener y arrastar la tarea</string>
+    <string name="move_btn_cont_desc">Botón de enviar tarea a la próxima lista</string>
+    <string name="blue_btn_cont_desc">Botón de color azul</string>
+    <string name="green_btn_cont_desc">Botón de color verde</string>
+    <string name="yellow_btn_cont_desc">Botón de color amarillo</string>
+    <string name="pink_btn_cont_desc">Botón de color rosa</string>
+    <string name="task_edit_text_hint">Escribe tu tarea aquí</string>
+</resources>

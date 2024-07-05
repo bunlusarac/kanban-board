@@ -18,5 +18,4 @@
     <string name="task_edit_text_hint">Enigu vian taskon ĉi tie</string>
     <string name="delete_dialog_text">Ĉu vi volas forigi ĉi tiun taskon?</string>
     <string name="move_btn_cont_desc">Sendi taskon al la sekva taskolisto butono</string>
-    <string name="move_btn_cont_desc">Sendi taskon al la sekva butono pri taskolisto</string>
 </resources>

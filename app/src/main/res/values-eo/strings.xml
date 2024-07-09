@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KanbanBoard</string>
+    <string name="tab_label_todo">FARI</string>
+    <string name="tab_label_doing">FARANTE</string>
+    <string name="tab_label_done">FARITA</string>
+    <string name="delete_dialog_title">Forigi taskon</string>
+    <string name="delete_dialog_yes_button_label">Jes</string>
+    <string name="delete_dialog_no_button_label">No</string>
+    <string name="new_task">Nova tasko</string>
+    <string name="delete_btn_cont_desc">Forigi butono</string>
+    <string name="color_btn_cont_desc">Malfermu/fermi koloran paletron butono</string>
+    <string name="drag_btn_cont_desc">Tenu kaj trenu tasko butono</string>
+    <string name="blue_btn_cont_desc">Blua kolora butono</string>
+    <string name="green_btn_cont_desc">Verda kolora butono</string>
+    <string name="yellow_btn_cont_desc">Flava kolora butono</string>
+    <string name="pink_btn_cont_desc">Rozkolora butono</string>
+    <string name="task_edit_text_hint">Enigu vian taskon ĉi tie</string>
+    <string name="delete_dialog_text">Ĉu vi volas forigi ĉi tiun taskon?</string>
+    <string name="move_btn_cont_desc">Sendi taskon al la sekva taskolisto butono</string>
+</resources>
